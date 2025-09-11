@@ -1,0 +1,12 @@
+[submodule "airflow2"]
+	path = airflow2
+	url = git@github.com:juanluisacebal-com/airflow2.git
+[submodule "airflow3"]
+	path = airflow3
+	url = git@github.com:juanluisacebal-com/airflow3.git
+[submodule "docker"]
+	path = docker
+	url = git@github.com:juanluisacebal-com/docker.git
+[submodule "mlflow"]
+	path = mlflow
+	url = git@github.com:juanluisacebal-com/mlflow.git
