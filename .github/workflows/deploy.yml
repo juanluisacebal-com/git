@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ejecutar despliegue
+        run: |
+          cd $RUTA_COMPOSES
+          git pull
+          files=(docker-compose*.yml)
+          args=()
+          for f in "${files[@]}"; do
+            args+=( -f "$f" )
+          done
+
+          docker compose "${args[@]}" down || true
+          docker compose "${args[@]}" build --pull --no-cache
+          docker compose "${args[@]}" up -d --force-recreate --remove-orphans
