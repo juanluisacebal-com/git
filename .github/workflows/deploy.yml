@@ -39,7 +39,7 @@ jobs:
             for f in "${files[@]}"; do
               args+=( -f "$f" )
             done
-            docker compose --verbose "${args[@]}" down || true
+            #docker compose --verbose "${args[@]}" down || true
 
       - name: Docker Compose Build
         env:
