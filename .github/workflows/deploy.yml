@@ -15,8 +15,9 @@ jobs:
 
       - name: Ejecutar despliegue
         run: |
-          cd $RUTA_COMPOSES
-          git pull
+          #cd $RUTA_COMPOSES
+          git pull --recurse-submodules
+          cd docker
           files=(docker-compose*.yml)
           args=()
           for f in "${files[@]}"; do
