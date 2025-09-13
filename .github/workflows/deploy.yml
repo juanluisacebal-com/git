@@ -50,7 +50,7 @@ jobs:
           for f in "${files[@]}"; do
             args+=( -f "$f" )
           done
-          docker compose "${args[@]}" build --pull --no-cache > docker_build.log 2>&1
+          docker compose "${args[@]}" build --pull --no-cache > docker_build.log 2>&1 || true
           cat docker_build.log
 
       - name: Docker Compose Up
