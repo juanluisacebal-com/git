@@ -36,7 +36,8 @@ jobs:
           for f in "${files[@]}"; do
             args+=( -f "$f" )
           done
-          docker compose "${args[@]}" down || true | tee debug.log
+          docker compose "${args[@]}" down > docker_down.log 2>&1
+          cat docker_down.log || true
 
       - name: Docker Compose Build
         env:
@@ -49,7 +50,8 @@ jobs:
           for f in "${files[@]}"; do
             args+=( -f "$f" )
           done
-          docker compose "${args[@]}" build --pull --no-cache | tee debug.log
+          docker compose "${args[@]}" build --pull --no-cache > docker_build.log 2>&1
+          cat docker_build.log
 
       - name: Docker Compose Up
         env:
@@ -62,4 +64,5 @@ jobs:
           for f in "${files[@]}"; do
             args+=( -f "$f" )
           done
-          docker compose "${args[@]}" up -d --force-recreate --remove-orphans | tee debug.log
+          docker compose "${args[@]}" up -d --force-recreate --remove-orphans > docker_up.log 2>&1
+          cat docker_up.log
