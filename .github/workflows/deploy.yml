@@ -33,13 +33,13 @@ jobs:
         run: |
             set -xv
             cd $RUTA_COMPOSES/docker
-            docker compose --verbose -f docker-compose.yml down || true
-            # files=(docker-compose*.yml)
-            # args=()
-            # for f in "${files[@]}"; do
-            #   args+=( -f "$f" )
-            # done
-            # docker compose --verbose "${args[@]}" down || true
+            #docker compose --verbose -f docker-compose.yml down || true
+            files=(docker-compose*.yml)
+            args=()
+            for f in "${files[@]}"; do
+              args+=( -f "$f" )
+            done
+            docker compose --verbose "${args[@]}" down || true
 
       - name: Docker Compose Build
         env:
