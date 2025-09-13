@@ -36,7 +36,7 @@ jobs:
           for f in "${files[@]}"; do
             args+=( -f "$f" )
           done
-          docker compose "${args[@]}" down > docker_down.log 2>&1
+          docker compose "${args[@]}" down > docker_down.log 2>&1 || true
           cat docker_down.log || true
 
       - name: Docker Compose Build
