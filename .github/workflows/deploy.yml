@@ -66,3 +66,13 @@ jobs:
           done
           docker compose "${args[@]}" up -d --force-recreate --remove-orphans > docker_up.log 2>&1
           cat docker_up.log
+
+      - name: Validar YAML de Docker Compose
+        env:
+          RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
+        run: |
+          set -x
+          cd $RUTA_COMPOSES/docker
+          for f in docker-compose*.yml; do
+            yamllint "$f"
+          done
