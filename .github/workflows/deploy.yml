@@ -15,22 +15,50 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Ejecutar despliegue
+      - name: Git Pull con Submódulos
         env:
           RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
-          
         run: |
           set -x
           cd $RUTA_COMPOSES
           echo "Ruta de los repos: $RUTA_COMPOSES"
           git pull --recurse-submodules
-          cd docker
+
+      - name: Docker Compose Down
+        env:
+          RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
+        run: |
+          set -x
+          cd $RUTA_COMPOSES/docker
           files=(docker-compose*.yml)
           args=()
           for f in "${files[@]}"; do
             args+=( -f "$f" )
           done
+          docker compose "${args[@]}" down || true | tee debug.log
 
-          docker compose "${args[@]}" down || true
-          docker compose "${args[@]}" build --pull --no-cache
-          docker compose "${args[@]}" up -d --force-recreate --remove-orphans
+      - name: Docker Compose Build
+        env:
+          RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
+        run: |
+          set -x
+          cd $RUTA_COMPOSES/docker
+          files=(docker-compose*.yml)
+          args=()
+          for f in "${files[@]}"; do
+            args+=( -f "$f" )
+          done
+          docker compose "${args[@]}" build --pull --no-cache | tee debug.log
+
+      - name: Docker Compose Up
+        env:
+          RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
+        run: |
+          set -x
+          cd $RUTA_COMPOSES/docker
+          files=(docker-compose*.yml)
+          args=()
+          for f in "${files[@]}"; do
+            args+=( -f "$f" )
+          done
+          docker compose "${args[@]}" up -d --force-recreate --remove-orphans | tee debug.log
