@@ -1,4 +1,3 @@
-
 name: Deploy
 env:
   RUTAVOLUMES: ${{ secrets.RUTAVOLUMES }}
@@ -34,12 +33,7 @@ jobs:
         run: |
             set -xv
             cd $RUTA_COMPOSES/docker
-            files=(docker-compose*.yml)
-            args=()
-            for f in "${files[@]}"; do
-              args+=( -f "$f" )
-            done
-            #docker compose --verbose "${args[@]}" down || true
+            docker compose --verbose -f docker-compose.yml down || true
 
       - name: Docker Compose Build
         env:
