@@ -22,7 +22,8 @@ jobs:
           set -x
           cd $RUTA_COMPOSES
           echo "Ruta de los repos: $RUTA_COMPOSES"
-          git pull --recurse-submodules
+          git pull --recurse-submodules > git_pull.log 2>&1
+          cat git_pull.log
 
       - name: Docker Compose Down
         env:
