@@ -3,6 +3,7 @@ name: Deploy
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 
 jobs:
@@ -19,6 +20,7 @@ jobs:
           
         run: |
           cd $RUTA_COMPOSES
+          echo "Ruta de los repos: $RUTA_COMPOSES"
           git pull --recurse-submodules
           cd docker
           files=(docker-compose*.yml)
