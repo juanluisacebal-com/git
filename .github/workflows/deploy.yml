@@ -22,7 +22,7 @@ jobs:
         env:
           RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
         run: |
-          set -x
+          set -xv
           cd $RUTA_COMPOSES
           echo "Ruta de los repos: $RUTA_COMPOSES"
           git pull --recurse-submodules > git_pull.log 2>&1
