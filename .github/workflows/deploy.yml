@@ -32,40 +32,37 @@ jobs:
         env:
           RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
         run: |
-          set -x
-          cd $RUTA_COMPOSES/docker
-          files=(docker-compose*.yml)
-          args=()
-          for f in "${files[@]}"; do
-            args+=( -f "$f" )
-          done
-          docker compose "${args[@]}" down > docker_down.log 2>&1 || true
-          cat docker_down.log || true
+            set -xv
+            cd $RUTA_COMPOSES/docker
+            files=(docker-compose*.yml)
+            args=()
+            for f in "${files[@]}"; do
+              args+=( -f "$f" )
+            done
+            docker compose --verbose "${args[@]}" down || true
 
       - name: Docker Compose Build
         env:
           RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
         run: |
-          set -x
-          cd $RUTA_COMPOSES/docker
-          files=(docker-compose*.yml)
-          args=()
-          for f in "${files[@]}"; do
-            args+=( -f "$f" )
-          done
-          docker compose "${args[@]}" build --pull --no-cache > docker_build.log 2>&1 || true
-          cat docker_build.log
+            set -xv
+            cd $RUTA_COMPOSES/docker
+            files=(docker-compose*.yml)
+            args=()
+            for f in "${files[@]}"; do
+              args+=( -f "$f" )
+            done
+            docker compose --verbose "${args[@]}" build --pull --no-cache || true
 
       - name: Docker Compose Up
         env:
           RUTA_COMPOSES: ${{ secrets.RUTA_COMPOSES }}
         run: |
-          set -x
-          cd $RUTA_COMPOSES/docker
-          files=(docker-compose*.yml)
-          args=()
-          for f in "${files[@]}"; do
-            args+=( -f "$f" )
-          done
-          docker compose "${args[@]}" up -d --force-recreate --remove-orphans > docker_up.log 2>&1
-          cat docker_up.log
+            set -xv
+            cd $RUTA_COMPOSES/docker
+            files=(docker-compose*.yml)
+            args=()
+            for f in "${files[@]}"; do
+              args+=( -f "$f" )
+            done
+            docker compose --verbose "${args[@]}" up --force-recreate --remove-orphans
