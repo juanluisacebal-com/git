@@ -65,4 +65,4 @@ jobs:
             for f in "${files[@]}"; do
               args+=( -f "$f" )
             done
-            docker compose --verbose "${args[@]}" up --force-recreate --remove-orphans
+            docker compose --verbose "${args[@]}" up --force-recreate --remove-orphans -d
